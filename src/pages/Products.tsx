@@ -4,9 +4,11 @@ import Footer from "@/components/Footer";
 import CategoryCard from "@/components/CategoryCard";
 import ProductCard from "@/components/ProductCard";
 import { categories, getProductsByCategory, getCategoryById } from "@/data/products";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Products = () => {
   const { categoryId } = useParams();
+  const { t } = useLanguage();
   
   // If no category selected, show all categories
   if (!categoryId) {
@@ -21,10 +23,13 @@ const Products = () => {
               <div className="max-w-xl">
                 <div className="industrial-line mb-4" />
                 <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                  Product Range
+                  {t("Product Range", "ထုတ်ကုန်အမျိုးအစားများ")}
                 </h1>
                 <p className="text-muted-foreground">
-                  Three essential categories for complete water bottle packaging. Select a category to explore our products.
+                  {t(
+                    "Three essential categories for complete water bottle packaging. Select a category to explore our products.",
+                    "ရေဘူးထုပ်ပိုးခြင်း အပြည့်အစုံအတွက် အဓိကအမျိုးအစား သုံးမျိုး။ ထုတ်ကုန်များကို ကြည့်ရန် အမျိုးအစားတစ်ခုကို ရွေးပါ။"
+                  )}
                 </p>
               </div>
             </div>
@@ -56,7 +61,7 @@ const Products = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1 flex items-center justify-center">
-          <p className="text-muted-foreground">Category not found</p>
+          <p className="text-muted-foreground">{t("Category not found", "အမျိုးအစား မတွေ့ပါ")}</p>
         </main>
         <Footer />
       </div>
@@ -74,10 +79,10 @@ const Products = () => {
             <div className="max-w-xl">
               <div className="industrial-line mb-4" />
               <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                {category.name}
+                {t(category.name, getCategoryNameMM(category.id))}
               </h1>
               <p className="text-muted-foreground">
-                {category.description}
+                {t(category.description, getCategoryDescMM(category.id))}
               </p>
             </div>
           </div>
@@ -94,7 +99,9 @@ const Products = () => {
 
             {products.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-muted-foreground">No products found in this category.</p>
+                <p className="text-muted-foreground">
+                  {t("No products found in this category.", "ဤအမျိုးအစားတွင် ထုတ်ကုန်မတွေ့ပါ။")}
+                </p>
               </div>
             )}
           </div>
@@ -104,6 +111,25 @@ const Products = () => {
       <Footer />
     </div>
   );
+};
+
+// Helper functions for Myanmar translations
+const getCategoryNameMM = (id: string): string => {
+  const names: Record<string, string> = {
+    "bottle-shells": "ဘူးအခွံများ",
+    "caps": "အဖုံးများ",
+    "preform-tubes": "Preform Tube များ",
+  };
+  return names[id] || "";
+};
+
+const getCategoryDescMM = (id: string): string => {
+  const descs: Record<string, string> = {
+    "bottle-shells": "ရေဖြည့်ရန် အဆင်သင့်ဖြစ်သော ဘူးအခွံများ",
+    "caps": "ဘူးတိုင်းအတွက် လုံခြုံစွာပိတ်နိုင်သော အဖုံးများ",
+    "preform-tubes": "ဘူးမဖြစ်ခင် ကုန်ကြမ်းပစ္စည်း",
+  };
+  return descs[id] || "";
 };
 
 export default Products;

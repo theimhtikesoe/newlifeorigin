@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Package, Circle, Cylinder } from "lucide-react";
 import { Category } from "@/data/products";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface CategoryCardProps {
   category: Category;
@@ -20,8 +21,28 @@ const getIcon = (iconName: string) => {
   }
 };
 
+// Category translations
+const getCategoryNameMM = (id: string): string => {
+  const names: Record<string, string> = {
+    "bottle-shells": "ဘူးအခွံများ",
+    "caps": "အဖုံးများ",
+    "preform-tubes": "Preform Tube များ",
+  };
+  return names[id] || "";
+};
+
+const getCategoryDescMM = (id: string): string => {
+  const descs: Record<string, string> = {
+    "bottle-shells": "ရေဖြည့်ရန် အဆင်သင့်ဖြစ်သော ဘူးအခွံများ",
+    "caps": "ဘူးတိုင်းအတွက် လုံခြုံစွာပိတ်နိုင်သော အဖုံးများ",
+    "preform-tubes": "ဘူးမဖြစ်ခင် ကုန်ကြမ်းပစ္စည်း",
+  };
+  return descs[id] || "";
+};
+
 const CategoryCard = ({ category, index }: CategoryCardProps) => {
   const Icon = getIcon(category.icon);
+  const { t } = useLanguage();
 
   return (
     <Link
@@ -46,15 +67,15 @@ const CategoryCard = ({ category, index }: CategoryCardProps) => {
 
       {/* Content */}
       <h3 className="text-xl font-semibold text-foreground mb-2">
-        {category.name}
+        {t(category.name, getCategoryNameMM(category.id))}
       </h3>
       <p className="text-muted-foreground text-sm flex-1">
-        {category.description}
+        {t(category.description, getCategoryDescMM(category.id))}
       </p>
 
       {/* CTA */}
       <div className="mt-6 flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-        <span>View Details</span>
+        <span>{t("View Details", "အသေးစိတ်ကြည့်ရန်")}</span>
         <ArrowRight className="w-4 h-4" />
       </div>
     </Link>

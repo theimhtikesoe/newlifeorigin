@@ -1,7 +1,10 @@
 import { Droplets, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-foreground text-background">
       <div className="container-narrow section-padding py-12">
@@ -18,41 +21,49 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-background/70 text-sm max-w-xs">
-              We shape what holds clean water.
+              {t(
+                "We shape what holds clean water.",
+                "သန့်ရှင်းသောရေကို ထိန်းသိမ်းမည့်အရာကို ကျွန်ုပ်တို့ဖန်တီးပါသည်။"
+              )}
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="font-semibold">Quick Links</h4>
+            <h4 className="font-semibold">{t("Quick Links", "အမြန်လင့်များ")}</h4>
             <nav className="flex flex-col gap-2">
               <Link to="/" className="text-sm text-background/70 hover:text-background transition-colors">
-                Home
+                {t("Home", "ပင်မ")}
               </Link>
               <Link to="/products" className="text-sm text-background/70 hover:text-background transition-colors">
-                Products
+                {t("Products", "ထုတ်ကုန်များ")}
               </Link>
               <Link to="/process" className="text-sm text-background/70 hover:text-background transition-colors">
-                Our Process
+                {t("Our Process", "ကျွန်ုပ်တို့၏လုပ်ငန်းစဉ်")}
               </Link>
             </nav>
           </div>
 
           {/* Contact */}
           <div className="space-y-4">
-            <h4 className="font-semibold">Contact</h4>
+            <h4 className="font-semibold">{t("Contact", "ဆက်သွယ်ရန်")}</h4>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                 <span className="text-sm text-background/70">
-                  6 Miles, Taunggyi<br />
-                  Shan State, Myanmar
+                  {t(
+                    "6 Miles, Taunggyi\nShan State, Myanmar",
+                    "၆ မိုင်၊ တောင်ကြီး\nရှမ်းပြည်နယ်၊ မြန်မာ"
+                  )}
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary flex-shrink-0" />
                 <span className="text-sm text-background/70">
-                  Contact our counter for pricing
+                  {t(
+                    "Contact our counter for pricing",
+                    "စျေးနှုန်းအတွက် ကောင်တာသို့ ဆက်သွယ်ပါ"
+                  )}
                 </span>
               </div>
             </div>
@@ -61,7 +72,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-6 border-t border-background/10 text-center">
           <p className="text-xs text-background/50">
-            © {new Date().getFullYear()} New Life Packaging. All rights reserved.
+            © {new Date().getFullYear()} New Life Packaging. {t("All rights reserved.", "မူပိုင်ခွင့်များအားလုံး ရယူထားပါသည်။")}
           </p>
         </div>
       </div>

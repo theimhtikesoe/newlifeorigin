@@ -1,13 +1,28 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Product } from "@/data/products";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProductCardProps {
   product: Product;
   index: number;
 }
 
+// Color translations
+const getColorMM = (color: string): string => {
+  const colors: Record<string, string> = {
+    "White": "အဖြူ",
+    "Blue": "အပြာ",
+    "Black": "အမည်း",
+    "Clear": "ကြည်လင်",
+    "Mixed colors": "ရောစပ်အရောင်များ",
+  };
+  return colors[color] || color;
+};
+
 const ProductCard = ({ product, index }: ProductCardProps) => {
+  const { t, language } = useLanguage();
+
   return (
     <Link
       to={`/product/${product.id}`}
@@ -37,7 +52,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       </h3>
       
       <p className="text-muted-foreground text-sm line-clamp-2 flex-1 mb-4">
-        {product.description_en}
+        {language === "en" ? product.description_en : product.description_mm}
       </p>
 
       {/* Colors */}
@@ -47,7 +62,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             key={color}
             className="text-xs px-2 py-1 rounded-full bg-secondary text-secondary-foreground"
           >
-            {color}
+            {t(color, getColorMM(color))}
           </span>
         ))}
         {product.colors.length > 3 && (
@@ -59,7 +74,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
 
       {/* CTA */}
       <div className="flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-        <span>View Specs</span>
+        <span>{t("View Specs", "အသေးစိတ်ကြည့်ရန်")}</span>
         <ArrowRight className="w-4 h-4" />
       </div>
     </Link>

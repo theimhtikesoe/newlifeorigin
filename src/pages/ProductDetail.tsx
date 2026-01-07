@@ -3,9 +3,11 @@ import { ArrowLeft, Check, Package } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getProductById, getCategoryById } from "@/data/products";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ProductDetail = () => {
   const { productId } = useParams();
+  const { t, language } = useLanguage();
   const product = productId ? getProductById(productId) : undefined;
 
   if (!product) {
@@ -14,10 +16,12 @@ const ProductDetail = () => {
         <Header />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <p className="text-muted-foreground mb-4">Product not found</p>
+            <p className="text-muted-foreground mb-4">
+              {t("Product not found", "ထုတ်ကုန် မတွေ့ပါ")}
+            </p>
             <Link to="/products" className="btn-secondary inline-flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
-              Back to Products
+              {t("Back to Products", "ထုတ်ကုန်များသို့ ပြန်သွားရန်")}
             </Link>
           </div>
         </main>
@@ -27,6 +31,16 @@ const ProductDetail = () => {
   }
 
   const category = getCategoryById(product.category);
+
+  // Category name translations
+  const getCategoryNameMM = (id: string): string => {
+    const names: Record<string, string> = {
+      "bottle-shells": "ဘူးအခွံများ",
+      "caps": "အဖုံးများ",
+      "preform-tubes": "Preform Tube များ",
+    };
+    return names[id] || "";
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -38,7 +52,7 @@ const ProductDetail = () => {
           <div className="container-narrow">
             <nav className="flex items-center gap-2 text-sm">
               <Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">
-                Products
+                {t("Products", "ထုတ်ကုန်များ")}
               </Link>
               <span className="text-muted-foreground">/</span>
               {category && (
@@ -47,7 +61,7 @@ const ProductDetail = () => {
                     to={`/products/${category.id}`}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    {category.name}
+                    {t(category.name, getCategoryNameMM(category.id))}
                   </Link>
                   <span className="text-muted-foreground">/</span>
                 </>
@@ -84,22 +98,23 @@ const ProductDetail = () => {
                   <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
                     {product.name}
                   </h1>
-                  <p className="text-muted-foreground mb-4">
-                    {product.description_en}
-                  </p>
-                  <p className="text-muted-foreground text-sm" lang="my">
-                    {product.description_mm}
+                  <p className="text-muted-foreground">
+                    {language === "en" ? product.description_en : product.description_mm}
                   </p>
                 </div>
 
                 {/* Specifications */}
                 <div className="card-industrial p-6 space-y-4">
-                  <h3 className="font-semibold text-foreground">Specifications</h3>
+                  <h3 className="font-semibold text-foreground">
+                    {t("Specifications", "သတ်မှတ်ချက်များ")}
+                  </h3>
                   
                   <div className="grid gap-4">
                     {/* Sizes */}
                     <div className="flex items-start gap-3">
-                      <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">Sizes</span>
+                      <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">
+                        {t("Sizes", "အရွယ်အစား")}
+                      </span>
                       <div className="flex flex-wrap gap-2">
                         {product.sizes.map((size) => (
                           <span key={size} className="text-sm px-3 py-1 rounded-full bg-secondary text-secondary-foreground">
@@ -111,11 +126,13 @@ const ProductDetail = () => {
 
                     {/* Colors */}
                     <div className="flex items-start gap-3">
-                      <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">Colors</span>
+                      <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">
+                        {t("Colors", "အရောင်များ")}
+                      </span>
                       <div className="flex flex-wrap gap-2">
                         {product.colors.map((color) => (
                           <span key={color} className="text-sm px-3 py-1 rounded-full bg-secondary text-secondary-foreground">
-                            {color}
+                            {t(color, getColorMM(color))}
                           </span>
                         ))}
                       </div>
@@ -123,7 +140,9 @@ const ProductDetail = () => {
 
                     {/* Material */}
                     <div className="flex items-start gap-3">
-                      <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">Material</span>
+                      <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">
+                        {t("Material", "ပစ္စည်း")}
+                      </span>
                       <span className="text-sm text-muted-foreground">{product.material}</span>
                     </div>
                   </div>
@@ -131,12 +150,14 @@ const ProductDetail = () => {
 
                 {/* Usage */}
                 <div>
-                  <h3 className="font-semibold text-foreground mb-3">Usage</h3>
+                  <h3 className="font-semibold text-foreground mb-3">
+                    {t("Usage", "အသုံးပြုပုံ")}
+                  </h3>
                   <ul className="space-y-2">
                     {product.usage.map((use) => (
                       <li key={use} className="flex items-center gap-3 text-sm text-muted-foreground">
                         <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                        {use}
+                        {t(use, getUsageMM(use))}
                       </li>
                     ))}
                   </ul>
@@ -145,7 +166,10 @@ const ProductDetail = () => {
                 {/* Price Note */}
                 <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
                   <p className="text-sm text-foreground font-medium">
-                    {product.priceNote}
+                    {t(
+                      product.priceNote,
+                      "စက်ရုံစျေးနှုန်း ရရှိနိုင်ပါသည်။ ကျွန်ုပ်တို့၏ ကောင်တာသို့ ဆက်သွယ်ပါ။"
+                    )}
                   </p>
                 </div>
 
@@ -155,7 +179,7 @@ const ProductDetail = () => {
                   className="btn-secondary inline-flex items-center gap-2"
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  Back to {category?.name || "Products"}
+                  {t(`Back to ${category?.name || "Products"}`, `${getCategoryNameMM(product.category) || "ထုတ်ကုန်များ"}သို့ ပြန်သွားရန်`)}
                 </Link>
               </div>
             </div>
@@ -166,6 +190,35 @@ const ProductDetail = () => {
       <Footer />
     </div>
   );
+};
+
+// Color translations
+const getColorMM = (color: string): string => {
+  const colors: Record<string, string> = {
+    "White": "အဖြူ",
+    "Blue": "အပြာ",
+    "Black": "အမည်း",
+    "Clear": "ကြည်လင်",
+    "Mixed colors": "ရောစပ်အရောင်များ",
+  };
+  return colors[color] || color;
+};
+
+// Usage translations
+const getUsageMM = (usage: string): string => {
+  const usages: Record<string, string> = {
+    "Drinking water filling": "သောက်ရေဖြည့်သွင်းခြင်း",
+    "Events": "ပွဲလမ်းသဘင်များ",
+    "Retail packaging": "လက်လီထုပ်ပိုးခြင်း",
+    "Daily use": "နေ့စဉ်အသုံးပြုခြင်း",
+    "Family use": "မိသားစုအသုံး",
+    "Office": "ရုံးသုံး",
+    "Standard water bottles": "စံရေဘူးများ",
+    "All bottle sizes": "ဘူးအရွယ်အစားအားလုံး",
+    "Bottle blowing process": "ဘူးမှုတ်လုပ်ငန်းစဉ်",
+    "Manufacturing": "ထုတ်လုပ်ခြင်း",
+  };
+  return usages[usage] || usage;
 };
 
 export default ProductDetail;
