@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProcessStepProps {
   step: number;
@@ -9,6 +10,8 @@ interface ProcessStepProps {
 }
 
 const ProcessStep = ({ step, title, description, icon, isLast = false }: ProcessStepProps) => {
+  const { t } = useLanguage();
+
   return (
     <div className="relative flex gap-4 sm:gap-6">
       {/* Step indicator line */}
@@ -25,7 +28,7 @@ const ProcessStep = ({ step, title, description, icon, isLast = false }: Process
       <div className="pb-8">
         <div className="flex items-center gap-3 mb-2">
           <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
-            Step {step}
+            {t(`Step ${step}`, `အဆင့် ${step}`)}
           </span>
         </div>
         <h3 className="text-lg font-semibold text-foreground mb-1">{title}</h3>
