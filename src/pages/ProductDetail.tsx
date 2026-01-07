@@ -62,10 +62,18 @@ const ProductDetail = () => {
           <div className="container-narrow">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Product Image */}
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-secondary to-muted flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Package className="w-16 h-16 text-primary" />
-                </div>
+              <div className="aspect-square rounded-2xl bg-gradient-to-br from-secondary to-muted flex items-center justify-center overflow-hidden">
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-contain p-8"
+                  />
+                ) : (
+                  <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Package className="w-16 h-16 text-primary" />
+                  </div>
+                )}
               </div>
 
               {/* Product Info */}
