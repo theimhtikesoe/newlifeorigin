@@ -29,10 +29,20 @@ const CategoryCard = ({ category, index }: CategoryCardProps) => {
       className="card-industrial p-6 sm:p-8 flex flex-col group"
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      {/* Icon */}
-      <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-        <Icon className="w-7 h-7 text-primary" />
-      </div>
+      {/* Image or Icon */}
+      {category.image ? (
+        <div className="aspect-video rounded-xl bg-gradient-to-br from-secondary to-muted flex items-center justify-center mb-6 overflow-hidden group-hover:from-primary/5 group-hover:to-primary/10 transition-colors">
+          <img
+            src={category.image}
+            alt={category.name}
+            className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      ) : (
+        <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+          <Icon className="w-7 h-7 text-primary" />
+        </div>
+      )}
 
       {/* Content */}
       <h3 className="text-xl font-semibold text-foreground mb-2">

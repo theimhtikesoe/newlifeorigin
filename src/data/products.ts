@@ -1,3 +1,7 @@
+import bottle300ml from "@/assets/bottle-300ml.png";
+import bottle500ml from "@/assets/bottle-500ml.png";
+import bottle1l from "@/assets/bottle-1l.png";
+
 export interface Product {
   id: string;
   name: string;
@@ -9,6 +13,7 @@ export interface Product {
   sizes: string[];
   usage: string[];
   priceNote: string;
+  image?: string;
 }
 
 export interface Category {
@@ -16,6 +21,7 @@ export interface Category {
   name: string;
   description: string;
   icon: string;
+  image?: string;
 }
 
 export const categories: Category[] = [
@@ -24,6 +30,7 @@ export const categories: Category[] = [
     name: "Bottle Shells",
     description: "Empty water bottles, ready for filling",
     icon: "bottle",
+    image: bottle500ml,
   },
   {
     id: "caps",
@@ -51,6 +58,7 @@ export const products: Product[] = [
     sizes: ["300ml / 0.3L"],
     usage: ["Drinking water filling", "Events", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
+    image: bottle300ml,
   },
   {
     id: "bottle-shell-500ml",
@@ -63,6 +71,7 @@ export const products: Product[] = [
     sizes: ["500ml / 0.5L"],
     usage: ["Drinking water filling", "Daily use", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
+    image: bottle500ml,
   },
   {
     id: "bottle-shell-1l",
@@ -75,6 +84,7 @@ export const products: Product[] = [
     sizes: ["1000ml / 1L"],
     usage: ["Family use", "Office", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
+    image: bottle1l,
   },
   {
     id: "cap-standard",

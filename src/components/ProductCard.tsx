@@ -14,13 +14,21 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       className="card-industrial p-6 flex flex-col group animate-slide-up"
       style={{ animationDelay: `${index * 80}ms` }}
     >
-      {/* Product Visual Placeholder */}
-      <div className="aspect-square rounded-lg bg-gradient-to-br from-secondary to-muted flex items-center justify-center mb-5 group-hover:from-primary/5 group-hover:to-primary/10 transition-colors">
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-          <span className="text-2xl font-bold text-primary">
-            {product.name.charAt(0)}
-          </span>
-        </div>
+      {/* Product Image */}
+      <div className="aspect-square rounded-lg bg-gradient-to-br from-secondary to-muted flex items-center justify-center mb-5 group-hover:from-primary/5 group-hover:to-primary/10 transition-colors overflow-hidden">
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+            <span className="text-2xl font-bold text-primary">
+              {product.name.charAt(0)}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content */}
