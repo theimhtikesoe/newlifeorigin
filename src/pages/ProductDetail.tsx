@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Check, Package } from "lucide-react";
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getProductById, getCategoryById } from "@/data/products";
@@ -9,6 +10,7 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const { t, language } = useLanguage();
   const product = productId ? getProductById(productId) : undefined;
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   if (!product) {
     return (
@@ -75,19 +77,56 @@ const ProductDetail = () => {
         <section className="section-padding">
           <div className="container-narrow">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Product Image */}
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-secondary to-muted flex items-center justify-center overflow-hidden">
-                {product.image ? (
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain p-8"
-                  />
-                ) : (
-                  <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Package className="w-16 h-16 text-primary" />
+              {/* Product Images */}
+              <div className="space-y-4">
+                {/* Main Image */}
+                <div className="aspect-square rounded-2xl bg-gradient-to-br from-secondary to-muted flex items-center justify-center overflow-hidden">
+                  {product.images?.[activeImageIndex] ? (
+                    <img
+                      src={product.images[activeImageIndex]}
+                      alt={product.name}
+                      className="w-full h-full object-contain p-8"
+                    />
+                  ) : (
+                    <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Package className="w-16 h-16 text-primary" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Thumbnail Images */}
+                {product.images && product.images.length > 1 && (
+                  <div className="flex gap-3">
+                    {product.images.map((img, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveImageIndex(idx)}
+                        className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
+                          activeImageIndex === idx
+                            ? "border-primary"
+                            : "border-transparent hover:border-primary/50"
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`${product.name} view ${idx + 1}`}
+                          className="w-full h-full object-contain bg-secondary p-1"
+                        />
+                      </button>
+                    ))}
                   </div>
                 )}
+
+                {/* Image Labels */}
+                <div className="flex gap-3 text-sm text-muted-foreground">
+                  <span className={activeImageIndex === 0 ? "text-primary font-medium" : ""}>
+                    {t("Without Cap", "အဖုံးမပါ")}
+                  </span>
+                  <span>|</span>
+                  <span className={activeImageIndex === 1 ? "text-primary font-medium" : ""}>
+                    {t("With Cap", "အဖုံးပါ")}
+                  </span>
+                </div>
               </div>
 
               {/* Product Info */}

@@ -1,6 +1,14 @@
-import bottle300ml from "@/assets/bottle-300ml.png";
-import bottle500ml from "@/assets/bottle-500ml.png";
-import bottle1l from "@/assets/bottle-1l.png";
+// 0.9L images
+import bottle09LBlue from "@/assets/0.9L-blue.jpg";
+import bottle09LBlueCap from "@/assets/0.9L-blue-cap.jpg";
+import bottle09LWhite from "@/assets/0.9L-white.jpg";
+import bottle09LWhiteCap from "@/assets/0.9L-white-cap.jpg";
+
+// 1L images
+import bottle1LBlue from "@/assets/1L-blue.jpg";
+import bottle1LBlueCap from "@/assets/1L-blue-cap.jpg";
+import bottle1LWhite from "@/assets/1L-white.jpg";
+import bottle1LWhiteCap from "@/assets/1L-white-cap.jpg";
 
 export interface Product {
   id: string;
@@ -13,7 +21,7 @@ export interface Product {
   sizes: string[];
   usage: string[];
   priceNote: string;
-  image?: string;
+  images: string[]; // [without cap, with cap]
 }
 
 export interface Category {
@@ -30,85 +38,62 @@ export const categories: Category[] = [
     name: "Bottle Shells",
     description: "Empty water bottles, ready for filling",
     icon: "bottle",
-    image: bottle500ml,
-  },
-  {
-    id: "caps",
-    name: "Caps",
-    description: "Secure sealing for every bottle",
-    icon: "cap",
-  },
-  {
-    id: "preform-tubes",
-    name: "Preform Tubes",
-    description: "Raw material before the bottle",
-    icon: "tube",
+    image: bottle09LBlueCap,
   },
 ];
 
 export const products: Product[] = [
   {
-    id: "bottle-shell-300ml",
-    name: "New Life Bottle Shell – 300ml",
+    id: "0.9L-blue",
+    name: "0.9L Blue",
     category: "bottle-shells",
-    description_en: "Empty water bottle shell produced for daily water packaging. Lightweight, clean finish, consistent shape.",
-    description_mm: "ရေဖြည့်သွင်းမထားသော ရေသန့်ဘူးအခွံဖြစ်ပြီး စက်မှုစံနှုန်းအတိုင်း ထုတ်လုပ်ထားပါသည်။",
+    description_en: "0.9 Liter blue bottle shell. Lightweight and durable.",
+    description_mm: "၀.၉ လီတာ အပြာရောင် ရေသန့်ဘူးအခွံ။",
     material: "Food-grade PET",
-    colors: ["White", "Blue"],
-    sizes: ["300ml / 0.3L"],
-    usage: ["Drinking water filling", "Events", "Retail packaging"],
+    colors: ["Blue"],
+    sizes: ["0.9L"],
+    usage: ["Drinking water filling", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
-    image: bottle300ml,
+    images: [bottle09LBlue, bottle09LBlueCap],
   },
   {
-    id: "bottle-shell-500ml",
-    name: "New Life Bottle Shell – 500ml",
+    id: "0.9L-white",
+    name: "0.9L White",
     category: "bottle-shells",
-    description_en: "Standard size empty water bottle shell. Perfect for everyday use. Clean, durable, and consistent quality.",
-    description_mm: "နေ့စဉ်အသုံးပြုရန် သင့်တော်သော စံအရွယ်အစား ရေသန့်ဘူးအခွံ။ သန့်ရှင်းပြီး အရည်အသွေးကောင်းမွန်ပါသည်။",
+    description_en: "0.9 Liter white/clear bottle shell. Clean and versatile.",
+    description_mm: "၀.၉ လီတာ အဖြူရောင် ရေသန့်ဘူးအခွံ။",
     material: "Food-grade PET",
-    colors: ["White", "Blue", "Clear"],
-    sizes: ["500ml / 0.5L"],
+    colors: ["White"],
+    sizes: ["0.9L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle09LWhite, bottle09LWhiteCap],
+  },
+  {
+    id: "1L-blue",
+    name: "1L Blue",
+    category: "bottle-shells",
+    description_en: "1 Liter blue bottle shell. Popular size for everyday use.",
+    description_mm: "၁ လီတာ အပြာရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["Blue"],
+    sizes: ["1L"],
     usage: ["Drinking water filling", "Daily use", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
-    image: bottle500ml,
+    images: [bottle1LBlue, bottle1LBlueCap],
   },
   {
-    id: "bottle-shell-1l",
-    name: "New Life Bottle Shell – 1L",
+    id: "1L-white",
+    name: "1L White",
     category: "bottle-shells",
-    description_en: "Large capacity empty water bottle shell for family or office use. Ergonomic design for easy handling.",
-    description_mm: "မိသားစုနှင့် ရုံးသုံးအတွက် အရွယ်အစားကြီး ရေသန့်ဘူးအခွံ။ ကိုင်တွယ်ရလွယ်ကူသော ဒီဇိုင်း။",
+    description_en: "1 Liter white/clear bottle shell. Clean look for premium branding.",
+    description_mm: "၁ လီတာ အဖြူရောင် ရေသန့်ဘူးအခွံ။",
     material: "Food-grade PET",
-    colors: ["White", "Blue"],
-    sizes: ["1000ml / 1L"],
-    usage: ["Family use", "Office", "Retail packaging"],
+    colors: ["White"],
+    sizes: ["1L"],
+    usage: ["Drinking water filling", "Daily use", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
-    image: bottle1l,
-  },
-  {
-    id: "cap-standard",
-    name: "New Life Bottle Cap",
-    category: "caps",
-    description_en: "Durable bottle caps designed for secure sealing and clean finish.",
-    description_mm: "ရေသန့်ဘူးအတွက် သေချာစွာ ပိတ်နိုင်သော အဖုံးများဖြစ်ပါသည်။",
-    material: "Food-grade PP",
-    colors: ["White", "Blue", "Black", "Mixed colors"],
-    sizes: ["Standard (28mm)", "Wide mouth (38mm)"],
-    usage: ["Standard water bottles", "All bottle sizes"],
-    priceNote: "Factory pricing available. Please contact our counter.",
-  },
-  {
-    id: "preform-tube-standard",
-    name: "New Life Preform Tube",
-    category: "preform-tubes",
-    description_en: "Preform tubes are the raw material used before blowing into water bottles.",
-    description_mm: "Preform Tube သည် ရေသန့်ဘူးမဖြစ်ခင် အသုံးပြုသော ကုန်ကြမ်းဖြစ်ပါသည်။",
-    material: "PET",
-    colors: ["White", "Blue", "Clear"],
-    sizes: ["Multiple gram sizes (customizable)"],
-    usage: ["Bottle blowing process", "Manufacturing"],
-    priceNote: "Factory pricing available. Bulk orders welcome.",
+    images: [bottle1LWhite, bottle1LWhiteCap],
   },
 ];
 

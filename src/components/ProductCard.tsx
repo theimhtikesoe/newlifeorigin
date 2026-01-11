@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Product } from "@/data/products";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -22,18 +23,23 @@ const getColorMM = (color: string): string => {
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
   const { t, language } = useLanguage();
+  const [showCap, setShowCap] = useState(false);
+
+  const currentImage = product.images?.[showCap ? 1 : 0];
 
   return (
     <Link
       to={`/product/${product.id}`}
       className="card-industrial p-6 flex flex-col group animate-slide-up"
       style={{ animationDelay: `${index * 80}ms` }}
+      onMouseEnter={() => setShowCap(true)}
+      onMouseLeave={() => setShowCap(false)}
     >
       {/* Product Image */}
       <div className="aspect-square rounded-lg bg-gradient-to-br from-secondary to-muted flex items-center justify-center mb-5 group-hover:from-primary/5 group-hover:to-primary/10 transition-colors overflow-hidden">
-        {product.image ? (
+        {currentImage ? (
           <img
-            src={product.image}
+            src={currentImage}
             alt={product.name}
             className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
           />
