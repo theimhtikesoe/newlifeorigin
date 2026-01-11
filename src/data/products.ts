@@ -1,3 +1,13 @@
+// 0.5L images
+import bottle05LWhite from "@/assets/0.5L-white.jpg";
+import bottle05LWhiteCap from "@/assets/0.5L-white-cap.jpg";
+
+// 0.6L images
+import bottle06LBlue from "@/assets/0.6L-blue.jpg";
+import bottle06LBlueCap from "@/assets/0.6L-blue-cap.jpg";
+import bottle06LWhite from "@/assets/0.6L-white.jpg";
+import bottle06LWhiteCap from "@/assets/0.6L-white-cap.jpg";
+
 // 0.85L images
 import bottle085LWhite from "@/assets/0.85L-white.jpg";
 import bottle085LWhiteCap from "@/assets/0.85L-white-cap.jpg";
@@ -23,6 +33,10 @@ import nwarnoegyi from "@/assets/nwarnoegyi.jpg";
 import nwarnoeGyiCap from "@/assets/nwarnoegyi-cap.jpg";
 import nwarnoetay from "@/assets/nwarnoetay.jpg";
 import nwarnoeHtayCap from "@/assets/nwarnoetay-cap.jpg";
+import kyarthar25 from "@/assets/25kyarthar.jpg";
+import kyarthar25Cap from "@/assets/25kyarthar-cap.jpg";
+import thar30 from "@/assets/30thar.jpg";
+import thar30Cap from "@/assets/30thar-cap.jpg";
 
 export interface Product {
   id: string;
@@ -57,6 +71,47 @@ export const categories: Category[] = [
 ];
 
 export const products: Product[] = [
+  // 0.5L Products
+  {
+    id: "0.5L-white",
+    name: "0.5L White",
+    category: "bottle-shells",
+    description_en: "0.5 Liter white/clear bottle shell.",
+    description_mm: "၀.၅ လီတာ အဖြူရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle05LWhite, bottle05LWhiteCap],
+  },
+  // 0.6L Products
+  {
+    id: "0.6L-blue",
+    name: "0.6L Blue",
+    category: "bottle-shells",
+    description_en: "0.6 Liter blue bottle shell.",
+    description_mm: "၀.၆ လီတာ အပြာရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["Blue"],
+    sizes: ["0.6L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle06LBlue, bottle06LBlueCap],
+  },
+  {
+    id: "0.6L-white",
+    name: "0.6L White",
+    category: "bottle-shells",
+    description_en: "0.6 Liter white/clear bottle shell.",
+    description_mm: "၀.၆ လီတာ အဖြူရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.6L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle06LWhite, bottle06LWhiteCap],
+  },
   // 0.85L Products
   {
     id: "0.85L-white",
@@ -152,6 +207,32 @@ export const products: Product[] = [
     images: [bottle1LWineWhite, bottle1LWineWhiteCap],
   },
   // Special Bottles
+  {
+    id: "25kyarthar",
+    name: "25 Kyar Thar",
+    category: "bottle-shells",
+    description_en: "25 Kyar Thar bottle shell.",
+    description_mm: "၂၅ ကျပ်သား ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["1L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [kyarthar25, kyarthar25Cap],
+  },
+  {
+    id: "30thar",
+    name: "30 Thar",
+    category: "bottle-shells",
+    description_en: "30 Thar bottle shell.",
+    description_mm: "၃၀ သား ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["1L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [thar30, thar30Cap],
+  },
   {
     id: "nwarnoegyi",
     name: "Nwar Noe Gyi",
