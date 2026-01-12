@@ -5,6 +5,8 @@ import bottle03LShalShal from "@/assets/0.3L-shal-shal.jpg";
 import bottle03LShalShalCap from "@/assets/0.3L-shal-shal-cap.jpg";
 import bottle03LWhite from "@/assets/0.3L-white.jpg";
 import bottle03LWhiteCap from "@/assets/0.3L-white-cap.jpg";
+import bottle03LWhiteWine from "@/assets/0.3L-white-wine.jpg";
+import bottle03LWhiteWineCap from "@/assets/0.3L-white-wine-cap.jpg";
 
 // 0.5L images
 import bottle05LWhite from "@/assets/0.5L-white.jpg";
@@ -49,6 +51,14 @@ import dount8BlueShalShal from "@/assets/8dount-blue-shal-shal.jpg";
 import dount8BlueShalShalCap from "@/assets/8dount-blue-shal-shal-cap.jpg";
 import dount8S1 from "@/assets/8dount-s1.jpg";
 import dount8S1Cap from "@/assets/8dount-s1-cap.jpg";
+import choChinWhite from "@/assets/cho-chin-white.jpg";
+import choChinWhiteCap from "@/assets/cho-chin-white-cap.jpg";
+import daneWineGyiWhite from "@/assets/dane-wine-gyi-white.jpg";
+import daneWineGyiWhiteCap from "@/assets/dane-wine-gyi-white-cap.jpg";
+import daneWineTayWhite from "@/assets/dane-wine-tay-white.jpg";
+import daneWineTayWhiteCap from "@/assets/dane-wine-tay-white-cap.jpg";
+import shweWine from "@/assets/shwe-wine.jpg";
+import shweWineCap from "@/assets/shwe-wine-cap.jpg";
 
 export interface Product {
   id: string;
@@ -122,6 +132,19 @@ export const products: Product[] = [
     usage: ["Drinking water filling", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
     images: [bottle03LWhite, bottle03LWhiteCap],
+  },
+  {
+    id: "0.3L-white-wine",
+    name: "0.3L White Wine",
+    category: "bottle-shells",
+    description_en: "0.3 Liter white wine-style bottle shell.",
+    description_mm: "၀.၃ လီတာ ဝိုင်ပုံစံ အဖြူရောင် ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.3L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle03LWhiteWine, bottle03LWhiteWineCap],
   },
   // 0.5L Products
   {
@@ -336,6 +359,58 @@ export const products: Product[] = [
     usage: ["Drinking water filling", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
     images: [dount8S1, dount8S1Cap],
+  },
+  {
+    id: "cho-chin-white",
+    name: "Cho Chin White",
+    category: "bottle-shells",
+    description_en: "Cho Chin White bottle shell.",
+    description_mm: "ချိုချဉ် အဖြူရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [choChinWhite, choChinWhiteCap],
+  },
+  {
+    id: "dane-wine-gyi-white",
+    name: "Dane Wine Gyi White",
+    category: "bottle-shells",
+    description_en: "Dane Wine Gyi White bottle shell.",
+    description_mm: "ဒိန်ခဲဝိုင်ကြီး အဖြူရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [daneWineGyiWhite, daneWineGyiWhiteCap],
+  },
+  {
+    id: "dane-wine-tay-white",
+    name: "Dane Wine Tay White",
+    category: "bottle-shells",
+    description_en: "Dane Wine Tay White bottle shell.",
+    description_mm: "ဒိန်ခဲဝိုင်တေ အဖြူရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [daneWineTayWhite, daneWineTayWhiteCap],
+  },
+  {
+    id: "shwe-wine",
+    name: "Shwe Wine",
+    category: "bottle-shells",
+    description_en: "Shwe Wine bottle shell.",
+    description_mm: "ရွှေဝိုင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [shweWine, shweWineCap],
   },
 ];
 
