@@ -17,6 +17,8 @@ import bottle06LBlue from "@/assets/0.6L-blue.jpg";
 import bottle06LBlueCap from "@/assets/0.6L-blue-cap.jpg";
 import bottle06LWhite from "@/assets/0.6L-white.jpg";
 import bottle06LWhiteCap from "@/assets/0.6L-white-cap.jpg";
+import bottle06LWineWhite from "@/assets/0.6L-wine-white.jpg";
+import bottle06LWineWhiteCap from "@/assets/0.6L-wine-white-cap.jpg";
 
 // 0.85L images
 import bottle085LWhite from "@/assets/0.85L-white.jpg";
@@ -59,6 +61,10 @@ import daneWineTayWhite from "@/assets/dane-wine-tay-white.jpg";
 import daneWineTayWhiteCap from "@/assets/dane-wine-tay-white-cap.jpg";
 import shweWine from "@/assets/shwe-wine.jpg";
 import shweWineCap from "@/assets/shwe-wine-cap.jpg";
+import dount8White from "@/assets/8dount-white.jpg";
+import dount8WhiteCap from "@/assets/8dount-white-cap.jpg";
+import daneWineTayBlue from "@/assets/dane-wine-tay-blue.jpg";
+import daneWineTayBlueCap from "@/assets/dane-wine-tay-blue-cap.jpg";
 
 export interface Product {
   id: string;
@@ -186,6 +192,19 @@ export const products: Product[] = [
     usage: ["Drinking water filling", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
     images: [bottle06LWhite, bottle06LWhiteCap],
+  },
+  {
+    id: "0.6L-wine-white",
+    name: "0.6L Wine White",
+    category: "bottle-shells",
+    description_en: "0.6 Liter wine-style white bottle shell.",
+    description_mm: "၀.၆ လီတာ ဝိုင်ပုံစံ အဖြူရောင် ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.6L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle06LWineWhite, bottle06LWineWhiteCap],
   },
   // 0.85L Products
   {
@@ -411,6 +430,32 @@ export const products: Product[] = [
     usage: ["Drinking water filling", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
     images: [shweWine, shweWineCap],
+  },
+  {
+    id: "8dount-white",
+    name: "8 Dount White",
+    category: "bottle-shells",
+    description_en: "8 Dount White bottle shell.",
+    description_mm: "၈ ထောင့် အဖြူရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [dount8White, dount8WhiteCap],
+  },
+  {
+    id: "dane-wine-tay-blue",
+    name: "Dane Wine Tay Blue",
+    category: "bottle-shells",
+    description_en: "Dane Wine Tay Blue bottle shell.",
+    description_mm: "ဒိန်ခဲဝိုင်တေ အပြာရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["Blue"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [daneWineTayBlue, daneWineTayBlueCap],
   },
 ];
 
