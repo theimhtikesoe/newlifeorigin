@@ -1,3 +1,11 @@
+// 0.3L images
+import bottle03LBlueS1 from "@/assets/0.3L-blue-s1.jpg";
+import bottle03LBlueS1Cap from "@/assets/0.3L-blue-s1-cap.jpg";
+import bottle03LShalShal from "@/assets/0.3L-shal-shal.jpg";
+import bottle03LShalShalCap from "@/assets/0.3L-shal-shal-cap.jpg";
+import bottle03LWhite from "@/assets/0.3L-white.jpg";
+import bottle03LWhiteCap from "@/assets/0.3L-white-cap.jpg";
+
 // 0.5L images
 import bottle05LWhite from "@/assets/0.5L-white.jpg";
 import bottle05LWhiteCap from "@/assets/0.5L-white-cap.jpg";
@@ -37,6 +45,10 @@ import kyarthar25 from "@/assets/25kyarthar.jpg";
 import kyarthar25Cap from "@/assets/25kyarthar-cap.jpg";
 import thar30 from "@/assets/30thar.jpg";
 import thar30Cap from "@/assets/30thar-cap.jpg";
+import dount8BlueShalShal from "@/assets/8dount-blue-shal-shal.jpg";
+import dount8BlueShalShalCap from "@/assets/8dount-blue-shal-shal-cap.jpg";
+import dount8S1 from "@/assets/8dount-s1.jpg";
+import dount8S1Cap from "@/assets/8dount-s1-cap.jpg";
 
 export interface Product {
   id: string;
@@ -71,6 +83,46 @@ export const categories: Category[] = [
 ];
 
 export const products: Product[] = [
+  // 0.3L Products
+  {
+    id: "0.3L-blue-s1",
+    name: "0.3L Blue S1",
+    category: "bottle-shells",
+    description_en: "0.3 Liter blue S1 bottle shell.",
+    description_mm: "၀.၃ လီတာ အပြာရောင် S1 ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["Blue"],
+    sizes: ["0.3L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle03LBlueS1, bottle03LBlueS1Cap],
+  },
+  {
+    id: "0.3L-shal-shal",
+    name: "0.3L Shal Shal",
+    category: "bottle-shells",
+    description_en: "0.3 Liter Shal Shal bottle shell.",
+    description_mm: "၀.၃ လီတာ ရှယ်ရှယ် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["Blue"],
+    sizes: ["0.3L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle03LShalShal, bottle03LShalShalCap],
+  },
+  {
+    id: "0.3L-white",
+    name: "0.3L White",
+    category: "bottle-shells",
+    description_en: "0.3 Liter white/clear bottle shell.",
+    description_mm: "၀.၃ လီတာ အဖြူရောင် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["White"],
+    sizes: ["0.3L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [bottle03LWhite, bottle03LWhiteCap],
+  },
   // 0.5L Products
   {
     id: "0.5L-white",
@@ -258,6 +310,32 @@ export const products: Product[] = [
     usage: ["Drinking water filling", "Retail packaging"],
     priceNote: "Factory pricing available. Please contact our counter.",
     images: [nwarnoetay, nwarnoeHtayCap],
+  },
+  {
+    id: "8dount-blue-shal-shal",
+    name: "8 Dount Blue Shal Shal",
+    category: "bottle-shells",
+    description_en: "8 Dount Blue Shal Shal bottle shell.",
+    description_mm: "၈ ထောင့် အပြာ ရှယ်ရှယ် ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["Blue"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [dount8BlueShalShal, dount8BlueShalShalCap],
+  },
+  {
+    id: "8dount-s1",
+    name: "8 Dount S1",
+    category: "bottle-shells",
+    description_en: "8 Dount S1 bottle shell.",
+    description_mm: "၈ ထောင့် S1 ရေသန့်ဘူးအခွံ။",
+    material: "Food-grade PET",
+    colors: ["Blue"],
+    sizes: ["0.5L"],
+    usage: ["Drinking water filling", "Retail packaging"],
+    priceNote: "Factory pricing available. Please contact our counter.",
+    images: [dount8S1, dount8S1Cap],
   },
 ];
 
