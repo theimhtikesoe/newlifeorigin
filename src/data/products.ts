@@ -318,7 +318,7 @@ export const products: Product[] = [
     id: "30thar",
     name: "၃၀ ကျပ်သား",
     category: "bottle-shells",
-    description_en: "30 Thar bottle shell.",
+    description_en: "30 Kyat Thar bottle shell.",
     description_mm: "၃၀ သား ရေသန့်ဘူးအခွံ။",
     material: "Food-grade PET",
     colors: ["White"],
