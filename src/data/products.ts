@@ -316,7 +316,7 @@ export const products: Product[] = [
   },
   {
     id: "30thar",
-    name: "30 Thar",
+    name: "၃၀ ကျပ်သား",
     category: "bottle-shells",
     description_en: "30 Thar bottle shell.",
     description_mm: "၃၀ သား ရေသန့်ဘူးအခွံ။",
