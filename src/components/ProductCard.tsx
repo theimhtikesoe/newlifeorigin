@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Product } from "@/data/products";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
+import OptimizedImage from "./OptimizedImage";
 
 interface ProductCardProps {
   product: Product;
@@ -36,18 +37,23 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       onMouseLeave={() => setShowCap(false)}
     >
       {/* Product Image */}
-      <div className="aspect-square rounded-lg bg-gradient-to-br from-secondary to-muted flex items-center justify-center mb-5 group-hover:from-primary/5 group-hover:to-primary/10 transition-colors overflow-hidden">
+      <div className="aspect-square rounded-lg overflow-hidden mb-5">
         {currentImage ? (
-          <img
+          <OptimizedImage
             src={currentImage}
             alt={product.name}
-            className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+            aspectRatio="square"
+            className="p-4 group-hover:scale-105 transition-transform duration-300"
+            containerClassName="bg-gradient-to-br from-secondary to-muted group-hover:from-primary/5 group-hover:to-primary/10 transition-colors"
+            enhanceOnHover
           />
         ) : (
-          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-2xl font-bold text-primary">
-              {product.name.charAt(0)}
-            </span>
+          <div className="w-full h-full bg-gradient-to-br from-secondary to-muted flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-2xl font-bold text-primary">
+                {product.name.charAt(0)}
+              </span>
+            </div>
           </div>
         )}
       </div>
