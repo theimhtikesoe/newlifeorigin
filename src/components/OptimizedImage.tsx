@@ -103,7 +103,7 @@ const OptimizedImage = memo(({
             "w-full h-full transition-all duration-500",
             objectFitClasses[objectFit],
             isLoaded ? "opacity-100" : "opacity-0",
-            isHovered && enhanceOnHover && "brightness-105 contrast-105 saturate-110",
+            "brightness-110 contrast-105 saturate-105", // Always enhanced for brighter look
             className
           )}
           style={{
