@@ -1,17 +1,33 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Check, Package } from "lucide-react";
+import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageGallery from "@/components/ImageGallery";
-import { getProductById, getCategoryById } from "@/data/products";
+import { useProduct, useCategory } from "@/hooks/useProducts";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const { t, language } = useLanguage();
-  const product = productId ? getProductById(productId) : undefined;
+  const { data: product, isLoading, error } = useProduct(productId || "");
+  const { category } = useCategory(product?.category || "");
 
-  if (!product) {
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <span className="ml-3 text-muted-foreground">
+            {t("Loading...", "ရယူနေသည်...")}
+          </span>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!product || error) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
@@ -30,8 +46,6 @@ const ProductDetail = () => {
       </div>
     );
   }
-
-  const category = getCategoryById(product.category);
 
   // Category name translations
   const getCategoryNameMM = (id: string): string => {
