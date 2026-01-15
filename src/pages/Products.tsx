@@ -3,13 +3,17 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CategoryCard from "@/components/CategoryCard";
 import ProductCard from "@/components/ProductCard";
-import { categories, getProductsByCategory, getCategoryById } from "@/data/products";
+import { useProducts, useCategories, useCategory } from "@/hooks/useProducts";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Loader2 } from "lucide-react";
 
 const Products = () => {
   const { categoryId } = useParams();
   const { t } = useLanguage();
-  
+  const { categories } = useCategories();
+  const { category } = useCategory(categoryId || "");
+  const { data: products, isLoading, error } = useProducts(categoryId);
+
   // If no category selected, show all categories
   if (!categoryId) {
     return (
@@ -52,10 +56,6 @@ const Products = () => {
     );
   }
 
-  // Show products in selected category
-  const category = getCategoryById(categoryId);
-  const products = getProductsByCategory(categoryId);
-
   if (!category) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -91,13 +91,26 @@ const Products = () => {
         {/* Products Grid */}
         <section className="section-padding pt-0">
           <div className="container-narrow">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product, index) => (
-                <ProductCard key={product.id} product={product} index={index} />
-              ))}
-            </div>
-
-            {products.length === 0 && (
+            {isLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <span className="ml-3 text-muted-foreground">
+                  {t("Loading products...", "ထုတ်ကုန်များ ရယူနေသည်...")}
+                </span>
+              </div>
+            ) : error ? (
+              <div className="text-center py-12">
+                <p className="text-destructive">
+                  {t("Error loading products.", "ထုတ်ကုန်များ ရယူရာတွင် အမှားရှိသည်။")}
+                </p>
+              </div>
+            ) : products && products.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {products.map((product, index) => (
+                  <ProductCard key={product.id} product={product} index={index} />
+                ))}
+              </div>
+            ) : (
               <div className="text-center py-12">
                 <p className="text-muted-foreground">
                   {t("No products found in this category.", "ဤအမျိုးအစားတွင် ထုတ်ကုန်မတွေ့ပါ။")}
