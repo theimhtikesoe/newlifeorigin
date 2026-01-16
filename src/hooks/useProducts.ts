@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { products as staticProducts, categories, Product, Category } from "@/data/products";
+import { getSortedProducts, categories, Product, Category } from "@/data/products";
 
 export interface DatabaseProduct {
   id: string;
@@ -33,6 +33,7 @@ const convertToAppProduct = (dbProduct: DatabaseProduct): Product => ({
   usage: dbProduct.usage || ["Drinking water filling", "Retail packaging"],
   priceNote: dbProduct.price_note || "Factory pricing available. Please contact our counter.",
   images: [dbProduct.image_url || "", dbProduct.image_cap_url || ""].filter(Boolean),
+  sortOrder: dbProduct.sort_order || 999,
 });
 
 export const useProducts = (categoryId?: string) => {
@@ -61,7 +62,8 @@ export const useProducts = (categoryId?: string) => {
         return data.map(convertToAppProduct);
       }
 
-      // Fallback to static products
+      // Fallback to static products (sorted)
+      const staticProducts = getSortedProducts();
       if (categoryId) {
         return staticProducts.filter((p) => p.category === categoryId);
       }
@@ -92,6 +94,7 @@ export const useProduct = (productId: string) => {
       }
 
       // Fallback to static product
+      const staticProducts = getSortedProducts();
       return staticProducts.find((p) => p.id === productId);
     },
   });
