@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { categories } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, LogOut, Upload, Image as ImageIcon, Loader2, Package, GripVertical } from "lucide-react";
 
@@ -45,6 +47,15 @@ const emptyProduct: Omit<Product, "id"> = {
   image_cap_url: null,
   is_active: true,
   sort_order: 0,
+};
+
+// Category name translations
+const getCategoryNameMM = (id: string): string => {
+  const names: Record<string, string> = {
+    "bottle-shells": "ဘူးအခွံများ",
+    "caps": "အဖုံးများ",
+  };
+  return names[id] || id;
 };
 
 const Admin = () => {
@@ -277,6 +288,24 @@ const Admin = () => {
                             required
                           />
                         </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="category" className="text-sm font-medium">အမျိုးအစား *</Label>
+                        <Select
+                          value={formData.category}
+                          onValueChange={(value) => setFormData({ ...formData, category: value })}
+                        >
+                          <SelectTrigger className="h-11">
+                            <SelectValue placeholder="အမျိုးအစား ရွေးပါ" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {categories.map((cat) => (
+                              <SelectItem key={cat.id} value={cat.id}>
+                                {getCategoryNameMM(cat.id)} ({cat.name})
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
 
@@ -539,7 +568,7 @@ const Admin = () => {
       <main className="container mx-auto px-4 py-8">
         {/* Stats Bar */}
         <div className="mb-8 p-4 bg-card rounded-xl border border-border/50 shadow-sm">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
                 <Package className="w-5 h-5 text-primary" />
@@ -549,8 +578,20 @@ const Admin = () => {
                 <p className="text-2xl font-bold">{products.length}</p>
               </div>
             </div>
-            <div className="text-sm text-muted-foreground">
-              {products.filter(p => p.is_active).length} ခု ပြသနေသည်
+            <div className="flex items-center gap-4">
+              <div className="flex gap-2 flex-wrap">
+                {categories.map((cat) => {
+                  const count = products.filter(p => p.category === cat.id).length;
+                  return (
+                    <span key={cat.id} className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full">
+                      {getCategoryNameMM(cat.id)}: {count}
+                    </span>
+                  );
+                })}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {products.filter(p => p.is_active).length} ခု ပြသနေသည်
+              </div>
             </div>
           </div>
         </div>
@@ -578,14 +619,17 @@ const Admin = () => {
                 key={product.id} 
                 className={`group relative overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-primary/30 ${!product.is_active ? 'opacity-60' : ''}`}
               >
-                {/* Status Badge */}
-                {!product.is_active && (
-                  <div className="absolute top-3 left-3 z-10">
+                {/* Status & Category Badges */}
+                <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
+                  {!product.is_active && (
                     <span className="px-2 py-1 text-xs font-medium bg-muted text-muted-foreground rounded-full">
                       ဝှက်ထားသည်
                     </span>
-                  </div>
-                )}
+                  )}
+                  <span className="px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
+                    {getCategoryNameMM(product.category)}
+                  </span>
+                </div>
 
                 {/* Image */}
                 <div className="aspect-square bg-gradient-to-br from-muted/50 to-muted overflow-hidden">
