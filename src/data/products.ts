@@ -1,3 +1,6 @@
+// Caps cover image
+import capsCover from "@/assets/caps-cover.jpg";
+
 // 0.3L images
 import bottle03LBlueS1 from "@/assets/0.3L-blue-s1.jpg";
 import bottle03LBlueS1Cap from "@/assets/0.3L-blue-s1-cap.jpg";
@@ -102,7 +105,7 @@ export const categories: Category[] = [
     name: "Caps",
     description: "Secure caps for all bottle sizes",
     icon: "cap",
-    image: bottle09LBlueCap,
+    image: capsCover,
   },
 ];
 
