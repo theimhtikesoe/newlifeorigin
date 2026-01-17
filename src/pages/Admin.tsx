@@ -12,7 +12,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, LogOut, Upload, Image as ImageIcon, Loader2, Package, GripVertical } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, Upload, Image as ImageIcon, Loader2, Package, ArrowUpDown, Check } from "lucide-react";
+import ReorderableProductList from "@/components/admin/ReorderableProductList";
 
 interface Product {
   id: string;
@@ -68,6 +69,7 @@ const Admin = () => {
   const [formData, setFormData] = useState<Omit<Product, "id">>(emptyProduct);
   const [uploading, setUploading] = useState(false);
   const [uploadingCap, setUploadingCap] = useState(false);
+  const [isReorderMode, setIsReorderMode] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -242,6 +244,26 @@ const Admin = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              {/* Reorder Mode Toggle */}
+              {isReorderMode ? (
+                <Button
+                  onClick={() => setIsReorderMode(false)}
+                  className="bg-green-600 hover:bg-green-700 shadow-md"
+                >
+                  <Check className="w-4 h-4 mr-2" />
+                  ပြီးပါပြီ
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  onClick={() => setIsReorderMode(true)}
+                  className="border-border/60"
+                >
+                  <ArrowUpDown className="w-4 h-4 mr-2" />
+                  အစီအစဥ်ပြောင်းရန်
+                </Button>
+              )}
+
               <Dialog open={isDialogOpen} onOpenChange={(open) => {
                 setIsDialogOpen(open);
                 if (!open) {
@@ -250,7 +272,7 @@ const Admin = () => {
                 }
               }}>
                 <DialogTrigger asChild>
-                  <Button className="bg-primary hover:bg-primary/90 shadow-md">
+                  <Button className="bg-primary hover:bg-primary/90 shadow-md" disabled={isReorderMode}>
                     <Plus className="w-4 h-4 mr-2" />
                     ပစ္စည်းအသစ်ထည့်ရန်
                   </Button>
@@ -612,7 +634,22 @@ const Admin = () => {
               </Button>
             </CardContent>
           </Card>
+        ) : isReorderMode ? (
+          /* Reorder Mode - Single Column List */
+          <div className="space-y-4">
+            <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+              <p className="text-sm text-primary font-medium flex items-center gap-2">
+                <ArrowUpDown className="w-4 h-4" />
+                ပစ္စည်းများကို အပေါ်အောက် ဆွဲပြီး အစီအစဥ်ပြောင်းနိုင်ပါသည်
+              </p>
+            </div>
+            <ReorderableProductList
+              products={products}
+              onReorderComplete={fetchProducts}
+            />
+          </div>
         ) : (
+          /* Normal Grid View */
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
               <Card 
