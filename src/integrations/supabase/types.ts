@@ -14,6 +14,89 @@ export type Database = {
   }
   public: {
     Tables: {
+      order_items: {
+        Row: {
+          cap_size: number
+          card_quantity: number
+          created_at: string
+          id: string
+          order_id: string
+          price_per_cap: number
+          product_id: string
+          product_name: string
+          total_caps: number
+          total_price: number
+        }
+        Insert: {
+          cap_size: number
+          card_quantity: number
+          created_at?: string
+          id?: string
+          order_id: string
+          price_per_cap: number
+          product_id: string
+          product_name: string
+          total_caps: number
+          total_price: number
+        }
+        Update: {
+          cap_size?: number
+          card_quantity?: number
+          created_at?: string
+          id?: string
+          order_id?: string
+          price_per_cap?: number
+          product_id?: string
+          product_name?: string
+          total_caps?: number
+          total_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          customer_city: string
+          customer_name: string
+          customer_notes: string | null
+          customer_phone: string
+          id: string
+          status: string
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_city: string
+          customer_name: string
+          customer_notes?: string | null
+          customer_phone: string
+          id?: string
+          status?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_city?: string
+          customer_name?: string
+          customer_notes?: string | null
+          customer_phone?: string
+          id?: string
+          status?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string
@@ -28,6 +111,7 @@ export type Database = {
           material: string | null
           name: string
           price_note: string | null
+          price_per_cap: number | null
           product_id: string
           sizes: string[] | null
           sort_order: number | null
@@ -47,6 +131,7 @@ export type Database = {
           material?: string | null
           name: string
           price_note?: string | null
+          price_per_cap?: number | null
           product_id: string
           sizes?: string[] | null
           sort_order?: number | null
@@ -66,6 +151,7 @@ export type Database = {
           material?: string | null
           name?: string
           price_note?: string | null
+          price_per_cap?: number | null
           product_id?: string
           sizes?: string[] | null
           sort_order?: number | null
