@@ -87,7 +87,7 @@ const ProductCard = ({ product, index, pricePerCap = 50 }: ProductCardProps) => 
         </div>
       </Link>
 
-      {/* Bottom Row with CTA and Buy Button */}
+      {/* Bottom Row with CTA */}
       <div className="flex items-center justify-between gap-3 pt-2 border-t border-border">
         <Link
           to={`/product/${product.id}`}
@@ -97,7 +97,9 @@ const ProductCard = ({ product, index, pricePerCap = 50 }: ProductCardProps) => 
           <ArrowRight className="w-4 h-4" />
         </Link>
 
+        {/* Buy button temporarily hidden
         <ProductBuyButton product={product} pricePerCap={pricePerCap} />
+        */}
       </div>
     </div>
   );
