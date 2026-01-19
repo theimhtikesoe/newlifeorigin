@@ -99,8 +99,6 @@ export type Database = {
       }
       products: {
         Row: {
-          cap_sizes: string[] | null
-          cap_type: string | null
           category: string
           colors: string[] | null
           created_at: string
@@ -109,12 +107,10 @@ export type Database = {
           id: string
           image_cap_url: string | null
           image_url: string | null
-          images: string[] | null
           is_active: boolean | null
           material: string | null
           name: string
           price_note: string | null
-          price_per_bottle: number | null
           price_per_cap: number | null
           product_id: string
           sizes: string[] | null
@@ -123,8 +119,6 @@ export type Database = {
           usage: string[] | null
         }
         Insert: {
-          cap_sizes?: string[] | null
-          cap_type?: string | null
           category?: string
           colors?: string[] | null
           created_at?: string
@@ -133,12 +127,10 @@ export type Database = {
           id?: string
           image_cap_url?: string | null
           image_url?: string | null
-          images?: string[] | null
           is_active?: boolean | null
           material?: string | null
           name: string
           price_note?: string | null
-          price_per_bottle?: number | null
           price_per_cap?: number | null
           product_id: string
           sizes?: string[] | null
@@ -147,8 +139,6 @@ export type Database = {
           usage?: string[] | null
         }
         Update: {
-          cap_sizes?: string[] | null
-          cap_type?: string | null
           category?: string
           colors?: string[] | null
           created_at?: string
@@ -157,12 +147,10 @@ export type Database = {
           id?: string
           image_cap_url?: string | null
           image_url?: string | null
-          images?: string[] | null
           is_active?: boolean | null
           material?: string | null
           name?: string
           price_note?: string | null
-          price_per_bottle?: number | null
           price_per_cap?: number | null
           product_id?: string
           sizes?: string[] | null
