@@ -16,25 +16,42 @@ export interface DatabaseProduct {
   price_note: string | null;
   image_url: string | null;
   image_cap_url: string | null;
+  images: string[] | null;
   is_active: boolean | null;
   sort_order: number | null;
+  cap_type: string | null;
+  cap_sizes: string[] | null;
 }
 
 // Convert database product to app Product format
-const convertToAppProduct = (dbProduct: DatabaseProduct): Product => ({
-  id: dbProduct.product_id,
-  name: dbProduct.name,
-  category: dbProduct.category,
-  description_en: dbProduct.description_en || "",
-  description_mm: dbProduct.description_mm || "",
-  material: dbProduct.material || "Food-grade PET",
-  colors: dbProduct.colors || ["White"],
-  sizes: dbProduct.sizes || ["1L"],
-  usage: dbProduct.usage || ["Drinking water filling", "Retail packaging"],
-  priceNote: dbProduct.price_note || "Factory pricing available. Please contact our counter.",
-  images: [dbProduct.image_url || "", dbProduct.image_cap_url || ""].filter(Boolean),
-  sortOrder: dbProduct.sort_order || 999,
-});
+const convertToAppProduct = (dbProduct: DatabaseProduct): Product => {
+  // For caps, use the images array directly if available
+  // For bottles, fallback to image_url and image_cap_url
+  let productImages: string[] = [];
+  
+  if (dbProduct.images && dbProduct.images.length > 0 && dbProduct.images.some(Boolean)) {
+    // Use the images array (for caps with 3 images)
+    productImages = dbProduct.images.filter(Boolean);
+  } else {
+    // Fallback to legacy image_url and image_cap_url (for bottles)
+    productImages = [dbProduct.image_url || "", dbProduct.image_cap_url || ""].filter(Boolean);
+  }
+
+  return {
+    id: dbProduct.product_id,
+    name: dbProduct.name,
+    category: dbProduct.category,
+    description_en: dbProduct.description_en || "",
+    description_mm: dbProduct.description_mm || "",
+    material: dbProduct.material || "Food-grade PET",
+    colors: dbProduct.colors || ["White"],
+    sizes: dbProduct.sizes || ["1L"],
+    usage: dbProduct.usage || ["Drinking water filling", "Retail packaging"],
+    priceNote: dbProduct.price_note || "Factory pricing available. Please contact our counter.",
+    images: productImages,
+    sortOrder: dbProduct.sort_order || 999,
+  };
+};
 
 export const useProducts = (categoryId?: string) => {
   return useQuery({
