@@ -11,9 +11,10 @@ interface ImageGalleryProps {
   images: string[];
   productName: string;
   labels?: string[];
+  showLabels?: boolean; // Whether to show labels (default: true for bottles, false for caps)
 }
 
-const ImageGallery = ({ images, productName, labels }: ImageGalleryProps) => {
+const ImageGallery = ({ images, productName, labels, showLabels = true }: ImageGalleryProps) => {
   const { t } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -125,24 +126,26 @@ const ImageGallery = ({ images, productName, labels }: ImageGalleryProps) => {
         </div>
       )}
 
-      {/* Image Labels */}
-      <div className="flex gap-3 justify-center text-sm text-muted-foreground">
-        {displayLabels.slice(0, images.length).map((label, idx) => (
-          <span
-            key={idx}
-            className={cn(
-              "cursor-pointer transition-colors",
-              activeIndex === idx && "text-primary font-medium"
-            )}
-            onClick={() => setActiveIndex(idx)}
-          >
-            {label}
-            {idx < displayLabels.length - 1 && idx < images.length - 1 && (
-              <span className="ml-3 text-muted-foreground/50">|</span>
-            )}
-          </span>
-        ))}
-      </div>
+      {/* Image Labels - Only show if showLabels is true */}
+      {showLabels && images.length > 1 && (
+        <div className="flex gap-3 justify-center text-sm text-muted-foreground">
+          {displayLabels.slice(0, images.length).map((label, idx) => (
+            <span
+              key={idx}
+              className={cn(
+                "cursor-pointer transition-colors",
+                activeIndex === idx && "text-primary font-medium"
+              )}
+              onClick={() => setActiveIndex(idx)}
+            >
+              {label}
+              {idx < displayLabels.length - 1 && idx < images.length - 1 && (
+                <span className="ml-3 text-muted-foreground/50">|</span>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Zoom Dialog */}
       <Dialog open={isZoomed} onOpenChange={setIsZoomed}>
