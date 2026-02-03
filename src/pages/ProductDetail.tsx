@@ -3,7 +3,8 @@ import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageGallery from "@/components/ImageGallery";
-import { useProduct, useCategory } from "@/hooks/useProducts";
+import PriceDisplay from "@/components/PriceDisplay";
+import { useProduct, useCategory, ProductWithPricing } from "@/hooks/useProducts";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const ProductDetail = () => {
@@ -11,6 +12,9 @@ const ProductDetail = () => {
   const { t, language } = useLanguage();
   const { data: product, isLoading, error } = useProduct(productId || "");
   const { category } = useCategory(product?.category || "");
+
+  // Cast to ProductWithPricing to access price fields
+  const productWithPricing = product as ProductWithPricing | undefined;
 
   if (isLoading) {
     return (
@@ -110,6 +114,14 @@ const ProductDetail = () => {
                   </p>
                 </div>
 
+                {/* Price Display - only shown if admin enabled it */}
+                <PriceDisplay
+                  pricePerBottle={productWithPricing?.pricePerBottle}
+                  pricePerCap={productWithPricing?.pricePerCap}
+                  category={product.category}
+                  className="p-4 bg-primary/5 rounded-lg border border-primary/10"
+                />
+
                 {/* Specifications */}
                 <div className="card-industrial p-6 space-y-4">
                   <h3 className="font-semibold text-foreground">
@@ -117,19 +129,49 @@ const ProductDetail = () => {
                   </h3>
                   
                   <div className="grid gap-4">
-                    {/* Sizes */}
-                    <div className="flex items-start gap-3">
-                      <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">
-                        {t("Sizes", "အရွယ်အစား")}
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        {product.sizes.map((size) => (
-                          <span key={size} className="text-sm px-3 py-1 rounded-full bg-secondary text-secondary-foreground">
-                            {size}
-                          </span>
-                        ))}
+                    {/* Sizes - for bottles */}
+                    {product.category !== 'caps' && product.sizes && product.sizes.length > 0 && (
+                      <div className="flex items-start gap-3">
+                        <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">
+                          {t("Sizes", "အရွယ်အစား")}
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          {product.sizes.map((size) => (
+                            <span key={size} className="text-sm px-3 py-1 rounded-full bg-secondary text-secondary-foreground">
+                              {size}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
+
+                    {/* Cap Sizes - for caps */}
+                    {product.category === 'caps' && productWithPricing?.capSizes && productWithPricing.capSizes.length > 0 && (
+                      <div className="flex items-start gap-3">
+                        <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">
+                          {t("Cap Sizes", "အဖုံး အရွယ်အစား")}
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          {productWithPricing.capSizes.map((size) => (
+                            <span key={size} className="text-sm px-3 py-1 rounded-full bg-secondary text-secondary-foreground">
+                              {size}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Cap Type - for caps */}
+                    {product.category === 'caps' && productWithPricing?.capType && (
+                      <div className="flex items-start gap-3">
+                        <span className="text-sm font-medium text-foreground w-24 flex-shrink-0">
+                          {t("Cap Type", "အဖုံး အမျိုးအစား")}
+                        </span>
+                        <span className="text-sm px-3 py-1 rounded-full bg-primary/10 text-primary">
+                          {productWithPricing.capType}
+                        </span>
+                      </div>
+                    )}
 
                     {/* Colors */}
                     <div className="flex items-start gap-3">

@@ -21,10 +21,20 @@ export interface DatabaseProduct {
   sort_order: number | null;
   cap_type: string | null;
   cap_sizes: string[] | null;
+  price_per_bottle: number | null;
+  price_per_cap: number | null;
+}
+
+// Extended Product interface with pricing
+export interface ProductWithPricing extends Product {
+  pricePerBottle?: number | null;
+  pricePerCap?: number | null;
+  capType?: string | null;
+  capSizes?: string[] | null;
 }
 
 // Convert database product to app Product format
-const convertToAppProduct = (dbProduct: DatabaseProduct): Product => {
+const convertToAppProduct = (dbProduct: DatabaseProduct): ProductWithPricing => {
   // For caps, use the images array directly if available
   // For bottles, fallback to image_url and image_cap_url
   let productImages: string[] = [];
@@ -50,6 +60,10 @@ const convertToAppProduct = (dbProduct: DatabaseProduct): Product => {
     priceNote: dbProduct.price_note || "Factory pricing available. Please contact our counter.",
     images: productImages,
     sortOrder: dbProduct.sort_order || 999,
+    pricePerBottle: dbProduct.price_per_bottle,
+    pricePerCap: dbProduct.price_per_cap,
+    capType: dbProduct.cap_type,
+    capSizes: dbProduct.cap_sizes,
   };
 };
 
