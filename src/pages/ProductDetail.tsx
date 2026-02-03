@@ -94,6 +94,7 @@ const ProductDetail = () => {
               <ImageGallery 
                 images={product.images || []} 
                 productName={product.name}
+                showLabels={product.category !== 'caps'}
               />
 
               {/* Product Info */}
