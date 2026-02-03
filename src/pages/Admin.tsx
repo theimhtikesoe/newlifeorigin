@@ -12,8 +12,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, LogOut, Upload, Image as ImageIcon, Loader2, Package, ArrowUpDown, Check } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, Upload, Image as ImageIcon, Loader2, Package, ArrowUpDown, Check, Eye, EyeOff } from "lucide-react";
 import ReorderableProductList from "@/components/admin/ReorderableProductList";
+import { useAppSettings, useUpdateAppSettings } from "@/hooks/useAppSettings";
 
 interface Product {
   id: string;
@@ -80,6 +81,10 @@ const Admin = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadingCap, setUploadingCap] = useState(false);
   const [uploadingImages, setUploadingImages] = useState<boolean[]>([false, false, false]);
+  
+  // Price visibility settings
+  const { data: appSettings, isLoading: settingsLoading } = useAppSettings();
+  const updateSettings = useUpdateAppSettings();
   const [isReorderMode, setIsReorderMode] = useState(false);
 
   useEffect(() => {
@@ -397,7 +402,7 @@ const Admin = () => {
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">စျေးနှုန်း</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="price_per_cap" className="text-sm font-medium">၁ ဆံ့ စျေး (MMK)</Label>
+                <Label htmlFor="price_per_cap" className="text-sm font-medium">၁ ဖုံး စျေး (MMK)</Label>
                 <Input
                   id="price_per_cap"
                   type="number"
@@ -549,17 +554,6 @@ const Admin = () => {
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">စျေးနှုန်း</h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="price_per_cap" className="text-sm font-medium">၁ ဆံ့ စျေး (MMK)</Label>
-              <Input
-                id="price_per_cap"
-                type="number"
-                value={formData.price_per_cap || 0}
-                onChange={(e) => setFormData({ ...formData, price_per_cap: parseInt(e.target.value) || 0 })}
-                placeholder="ဥပမာ - 50"
-                className="h-11"
-              />
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="price_per_bottle" className="text-sm font-medium">၁ ဘူး စျေး (MMK)</Label>
               <Input
                 id="price_per_bottle"
@@ -570,16 +564,16 @@ const Admin = () => {
                 className="h-11"
               />
             </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="price_note" className="text-sm font-medium">စျေးနှုန်းမှတ်ချက်</Label>
-            <Input
-              id="price_note"
-              value={formData.price_note || ""}
-              onChange={(e) => setFormData({ ...formData, price_note: e.target.value })}
-              placeholder="ဥပမာ - စျေးနှုန်း အတွက် ဆက်သွယ်ပါ"
-              className="h-11"
-            />
+            <div className="space-y-2">
+              <Label htmlFor="price_note" className="text-sm font-medium">စျေးနှုန်းမှတ်ချက်</Label>
+              <Input
+                id="price_note"
+                value={formData.price_note || ""}
+                onChange={(e) => setFormData({ ...formData, price_note: e.target.value })}
+                placeholder="ဥပမာ - စျေးနှုန်း အတွက် ဆက်သွယ်ပါ"
+                className="h-11"
+              />
+            </div>
           </div>
         </div>
 
@@ -918,6 +912,56 @@ const Admin = () => {
           </div>
         </div>
 
+        {/* Price Visibility Toggle */}
+        <div className="mb-6 p-4 bg-card rounded-xl border border-border/50 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {appSettings?.show_price ? (
+                <Eye className="w-5 h-5 text-green-600" />
+              ) : (
+                <EyeOff className="w-5 h-5 text-muted-foreground" />
+              )}
+              <div>
+                <p className="font-medium text-foreground">စျေးနှုန်း ပြသမှု</p>
+                <p className="text-sm text-muted-foreground">
+                  {appSettings?.show_price 
+                    ? "စျေးနှုန်းများကို Customer များအား ပြသနေပါသည်" 
+                    : "စျေးနှုန်းများကို ဝှက်ထားပါသည်"
+                  }
+                </p>
+              </div>
+            </div>
+            <Button
+              variant={appSettings?.show_price ? "default" : "outline"}
+              onClick={() => {
+                updateSettings.mutate({ show_price: !appSettings?.show_price }, {
+                  onSuccess: () => {
+                    toast.success(
+                      appSettings?.show_price 
+                        ? "စျေးနှုန်းများကို ဝှက်ထားပါပြီ" 
+                        : "စျေးနှုန်းများကို ပြသနေပါပြီ"
+                    );
+                  },
+                  onError: (error: any) => {
+                    toast.error("ပြောင်းလဲ၍မရပါ: " + error.message);
+                  }
+                });
+              }}
+              disabled={updateSettings.isPending || settingsLoading}
+              className="min-w-[140px]"
+            >
+              {updateSettings.isPending ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : appSettings?.show_price ? (
+                <EyeOff className="w-4 h-4 mr-2" />
+              ) : (
+                <Eye className="w-4 h-4 mr-2" />
+              )}
+              {appSettings?.show_price ? "စျေး ဝှက်ရန်" : "စျေး ပြရန်"}
+            </Button>
+          </div>
+        </div>
+
         {products.length === 0 ? (
           <Card className="border-dashed border-2 border-border/60">
             <CardContent className="flex flex-col items-center justify-center py-16">
@@ -1011,20 +1055,20 @@ const Admin = () => {
                   </div>
 
                   {/* Pricing Info */}
-                  {(product.price_per_cap || product.price_per_bottle) && (
+                  {(product.category === 'caps' ? product.price_per_cap : product.price_per_bottle) ? (
                     <div className="flex gap-2 mb-2 text-xs">
-                      {product.price_per_cap ? (
-                        <span className="px-2 py-0.5 bg-green-100 text-green-700 rounded">
-                          ဆံ့: {product.price_per_cap} MMK
+                      {product.category === 'caps' && product.price_per_cap ? (
+                        <span className="px-2 py-0.5 bg-primary/10 text-primary rounded">
+                          ၁ ဖုံး: {product.price_per_cap} MMK
                         </span>
                       ) : null}
-                      {product.price_per_bottle ? (
-                        <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded">
-                          ဘူး: {product.price_per_bottle} MMK
+                      {product.category !== 'caps' && product.price_per_bottle ? (
+                        <span className="px-2 py-0.5 bg-primary/10 text-primary rounded">
+                          ၁ ဘူး: {product.price_per_bottle} MMK
                         </span>
                       ) : null}
                     </div>
-                  )}
+                  ) : null}
 
                   {/* Description */}
                   <p className="text-sm text-muted-foreground line-clamp-2 mb-3 min-h-[2.5rem]">
